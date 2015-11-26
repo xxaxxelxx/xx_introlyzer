@@ -16,10 +16,10 @@ for CUSTOMER in "$@"; do
     sed -i "s/CUSTOMER/$CUSTOMER/g" /customer/$CUSTOMER/index.html
     USERSTRING="$USERSTRING|user=$CUSTOMER"
 done
-CONFIGSTRING="\"/\" => (\"method\"  => \"digest\",\"realm\"   => \"Authenticate yourself to the skynet.\",\"require\" => \"$USERSTRING\" ),$CONFIGSTRING"
+CONFIGSTRING="\"/index.php\" => (\"method\"  => \"digest\",\"realm\"   => \"Authenticate yourself to the skynet.\",\"require\" => \"$USERSTRING\" ),$CONFIGSTRING"
 echo "auth.require = ( $CONFIGSTRING )" >> $CONFIGFILE
 cp index.php /customer/
 
-#lighttpd -D -f /etc/lighttpd/lighttpd.conf
-bash
+lighttpd -D -f /etc/lighttpd/lighttpd.conf
+#bash
 exit
