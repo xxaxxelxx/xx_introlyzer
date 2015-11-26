@@ -18,17 +18,17 @@ RUN apt-get install -qqy lighttpd
 RUN apt-get clean
 
 COPY lighttpd.conf /etc/lighttpd/lighttpd.conf
-COPY *.php /var/www/html/
+#COPY *.php /var/www/html/
 #COPY *.mp3 /var/www/html/
 #COPY lighttpd-plain.user /etc/lighttpd/
-RUN chown -R www-data /etc/lighttpd
-RUN chown -R www-data /var/www/html
+#RUN chown -R www-data /etc/lighttpd
+#RUN chown -R www-data /var/www/html
 
 COPY entrypoint.sh /entrypoint.sh
 
-ENV UPDATEPASSWORD="my-_-password"
+#ENV UPDATEPASSWORD="my-_-password"
 
-EXPOSE 81
+#EXPOSE 80
 
 ENTRYPOINT [ "/entrypoint.sh" ]
 #CMD [ "bash" ]
