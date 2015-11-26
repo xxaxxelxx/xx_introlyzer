@@ -2,7 +2,8 @@
 
 
 
-echo ZUUUPPPIII;
+#echo ZUUUPPPIII;
+header("Location: http://".getenv('HTTP_HOST').":81/".getenv('REMOTE_USER'));
 exit;
 
 
