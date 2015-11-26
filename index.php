@@ -1,8 +1,9 @@
 <?php
 
 echo "AAA";
-echo "BBB".getenv('HTTP_HOST')."BBB";
-echo "CCC".getenv('REMOTE_USER')."CCC";
+echo "BBB".getenv('HTTP_HOST')."BBB<br>";
+echo "CCC".getenv('REMOTE_USER')."CCC<br>";
+echo "DDD".getenv('PHP_AUTH_USER')."DDD";
 
 
 #echo ZUUUPPPIII;
