@@ -8,7 +8,7 @@ echo "admin:$CUSTOMERPASSWORD_admin" > $PASSWORDFILE
 CONFIGSTRING="\"/admin\" => (\"method\"  => \"digest\",\"realm\"   => \"You are entering the admin sector. Authenticate yourself to the skynet.\",\"require\" => \"user=admin\" )"
 USERSTRING="user=admin"
 test -d /customer/admin/ || mkdir -p /customer/admin/
-cp index.admin.html /customer/admin/
+cp index.admin.html /customer/admin/index.html
 for CUSTOMER in "$@"; do
     echo $CUSTOMER:$(eval echo \$CUSTOMERPASSWORD_$CUSTOMER) >> $PASSWORDFILE
     CONFIGSTRING="\"/$CUSTOMER\" => (\"method\"  => \"digest\",\"realm\"   => \"You are entering the $CUSTOMER sector. Authenticate yourself to the skynet.\",\"require\" => \"user=admin|user=$CUSTOMER\" ),$CONFIGSTRING"
@@ -20,6 +20,6 @@ CONFIGSTRING="\"/\" => (\"method\"  => \"digest\",\"realm\"   => \"Authenticate 
 echo "auth.require = ( $CONFIGSTRING )" >> $CONFIGFILE
 cp index.php /customer/
 
-#lighttpd -D -f /etc/lighttpd/lighttpd.conf
-bash
+lighttpd -D -f /etc/lighttpd/lighttpd.conf
+#bash
 exit
