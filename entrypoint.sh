@@ -5,17 +5,17 @@ CONFIGFILE=$CFGDIR/lighttpd.conf
 
 # password section
 echo "admin:$CUSTOMERPASSWORD_admin" > $PASSWORDFILE
-CONFIGSTRING=""
+CONFIGSTRING="\"/admin\" => (\"method\"  => \"digest\",\"realm\"   => \"You are entering the admin sector. Authenticate yourself to the skynet.\",\"require\" => \"user=admin\" )"
+USERSTRING="user=admin"
 for CUSTOMER in "$@"; do
     echo $CUSTOMER:$(eval echo \$CUSTOMERPASSWORD_$CUSTOMER) >> $PASSWORDFILE
-    if [ "x$CONFIGSTRING" != "x" ]; then
-	CONFIGSTRING="\"/$CUSTOMER\" => (\"method\"  => \"digest\",\"realm\"   => \"You are entering the $CUSTOMER sector.\",\"require\" => \"user=admin|user=$CUSTOMER\" ),$CONFIGSTRING"
-    else
-	CONFIGSTRING="\"/$CUSTOMER\" => (\"method\"  => \"digest\",\"realm\"   => \"You are entering the $CUSTOMER sector. Authenticate yourself to the skynet.\",\"require\" => \"user=admin|user=$CUSTOMER\" )"
-    fi
+    CONFIGSTRING="\"/$CUSTOMER\" => (\"method\"  => \"digest\",\"realm\"   => \"You are entering the $CUSTOMER sector. Authenticate yourself to the skynet.\",\"require\" => \"user=admin|user=$CUSTOMER\" ),$CONFIGSTRING"
     cp index.html /customer/$CUSTOMER/
+    USERSTRING="$USERSTRING|user=$CUSTOMER"
 done
-    echo "auth.require = ( $CONFIGSTRING )" >> $CONFIGFILE
+CONFIGSTRING="\"/index.php\" => (\"method\"  => \"digest\",\"realm\"   => \"Authenticate yourself to the skynet.\",\"require\" => \"$USERSTRING\" ),$CONFIGSTRING"
+echo "auth.require = ( $CONFIGSTRING )" >> $CONFIGFILE
+cp index.php /customer/
 
 lighttpd -D -f /etc/lighttpd/lighttpd.conf
 #bash
