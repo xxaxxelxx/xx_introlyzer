@@ -5,7 +5,7 @@ echo "BBB".getenv('HTTP_HOST')."BBB<br>";
 echo "CCC".getenv('REMOTE_USER')."CCC<br>";
 echo "DDD".getenv('PHP_AUTH_USER')."DDD";
 echo 'My username is ' .$_ENV["USER"] . '!';
-
+phpinfo();
 
 #echo ZUUUPPPIII;
 #header("Location: http://".getenv('HTTP_HOST')."/".getenv('REMOTE_USER'));
