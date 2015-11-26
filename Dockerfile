@@ -25,6 +25,8 @@ COPY lighttpd.conf /etc/lighttpd/lighttpd.conf
 #RUN chown -R www-data /var/www/html
 
 COPY entrypoint.sh /entrypoint.sh
+COPY index.html /index.html
+
 
 #ENV UPDATEPASSWORD="my-_-password"
 
