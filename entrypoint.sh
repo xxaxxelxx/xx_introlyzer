@@ -17,6 +17,6 @@ for CUSTOMER in "$@"; do
 done
     echo "auth.require = ( $CONFIGSTRING )" >> $CONFIGFILE
 
-#lighttpd -D -f /etc/lighttpd/lighttpd.conf
-bash
+lighttpd -D -f /etc/lighttpd/lighttpd.conf
+#bash
 exit
