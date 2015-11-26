@@ -13,7 +13,7 @@ for CUSTOMER in "$@"; do
     cp index.html /customer/$CUSTOMER/
     USERSTRING="$USERSTRING|user=$CUSTOMER"
 done
-CONFIGSTRING="\"/index.php\" => (\"method\"  => \"digest\",\"realm\"   => \"Authenticate yourself to the skynet.\",\"require\" => \"$USERSTRING\" ),$CONFIGSTRING"
+CONFIGSTRING="\"/\" => (\"method\"  => \"digest\",\"realm\"   => \"Authenticate yourself to the skynet.\",\"require\" => \"$USERSTRING\" ),$CONFIGSTRING"
 echo "auth.require = ( $CONFIGSTRING )" >> $CONFIGFILE
 cp index.php /customer/
 
