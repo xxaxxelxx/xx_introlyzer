@@ -7,7 +7,7 @@ CONFIGFILE=$CFGDIR/lighttpd.conf
 echo "admin:$CUSTOMERPASSWORD_ADMIN" > $PASSWORDFILE
 for CUSTOMER in "$@"; do
     echo $CUSTOMER:$(eval echo \$CUSTOMERPASSWORD_$CUSTOMER) >> $PASSWORDFILE
-    echo "auth.require = ( \"/customer/$CUSTOMER\" => (\"method\"  => \"digest\",\"realm\"   => \"You are entering the $CUSTOMER sector!\",\"require\" => \"user=$CUSTOMER\" ))" >> CONFIGFILE=$CFGDIR/lighttpd.conf
+    echo "auth.require = ( \"/customer/$CUSTOMER\" => (\"method\"  => \"digest\",\"realm\"   => \"You are entering the $CUSTOMER sector!\",\"require\" => \"user=$CUSTOMER\" ))" >> $CONFIGFILE
     cp index.html /customer/$CUSTOMER/
 done
 
