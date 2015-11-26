@@ -4,6 +4,7 @@ echo "AAA";
 echo "BBB".getenv('HTTP_HOST')."BBB<br>";
 echo "CCC".getenv('REMOTE_USER')."CCC<br>";
 echo "DDD".getenv('PHP_AUTH_USER')."DDD";
+echo 'My username is ' .$_ENV["USER"] . '!';
 
 
 #echo ZUUUPPPIII;
