@@ -2,9 +2,11 @@
 
 echo "AAA";
 echo "BBB".getenv('HTTP_HOST')."BBB";
+echo "CCC".getenv('REMOTE_USER')."CCC";
+
 
 #echo ZUUUPPPIII;
-#header("Location: http://".getenv('HTTP_HOST').":81/".getenv('REMOTE_USER'));
+#header("Location: http://".getenv('HTTP_HOST')."/".getenv('REMOTE_USER'));
 #header("Location: http://".getenv('HTTP_HOST').":81/bbradio");
 exit;
 
