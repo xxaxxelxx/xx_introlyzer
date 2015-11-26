@@ -11,6 +11,6 @@ for CUSTOMER in "$@"; do
     cp index.html /customer/$CUSTOMER/
 done
 
-lighttpd -D -f /etc/lighttpd/lighttpd.conf
-
+#lighttpd -D -f /etc/lighttpd/lighttpd.conf
+bash
 exit
