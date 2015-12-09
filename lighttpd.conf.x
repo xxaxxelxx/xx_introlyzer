@@ -15,7 +15,6 @@ server.pid-file             = "/var/run/lighttpd.pid"
 server.username             = "www-data"
 server.groupname            = "www-data"
 server.port                 = 80
-server.dir-listing          = "enable"
 
 index-file.names            = ( "index.php", "index.html", "index.lighttpd.html" )
 url.access-deny             = ( "~", ".inc" )
@@ -33,7 +32,6 @@ fastcgi.server = ( ".php" => ((
                     "bin-path" => "/usr/bin/php-cgi",
                     "socket" => "/tmp/php.sock" 
                 )))
-
 
 
 #$HTTP["url"] !~ "^/.+\.php$" { url.redirect = ( "^/(.+)$" => "/redirect.php?mnt=$1" ) }
