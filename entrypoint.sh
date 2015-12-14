@@ -20,6 +20,6 @@ CONFIGSTRING="\"/index.php\" => (\"method\"  => \"digest\",\"realm\"   => \"Auth
 echo "auth.require = ( $CONFIGSTRING )" >> $CONFIGFILE
 cp index.php /customer/
 
-lighttpd -D -f /etc/lighttpd/lighttpd.conf
-#bash
+#lighttpd -D -f /etc/lighttpd/lighttpd.conf
+bash
 exit
