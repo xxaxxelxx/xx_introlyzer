@@ -12,7 +12,7 @@ cp index.admin.html /customer/admin/index.html
 for CUSTOMER in "$@"; do
     echo $CUSTOMER:$(eval echo \$CUSTOMERPASSWORD_$CUSTOMER) >> $PASSWORDFILE
     CONFIGSTRING="\"/$CUSTOMER\" => (\"method\"  => \"digest\",\"realm\"   => \"You are entering the $CUSTOMER sector. Authenticate yourself to the skynet.\",\"require\" => \"user=admin|user=$CUSTOMER\" ),$CONFIGSTRING"
-    cp index.customer.html /customer/$CUSTOMER/index.html
+    test -r /customer/$CUSTOMER/index.html || cp index.customer.html /customer/$CUSTOMER/index.html
     sed -i "s/CUSTOMER/$CUSTOMER/g" /customer/$CUSTOMER/index.html
     USERSTRING="$USERSTRING|user=$CUSTOMER"
 done
