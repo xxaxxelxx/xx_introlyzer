@@ -21,8 +21,6 @@ index-file.names            = ( "index.php", "index.html", "index.lighttpd.html"
 url.access-deny             = ( "~", ".inc" )
 static-file.exclude-extensions = ( ".php", ".pl", ".fcgi" )
 
-dir-listing.external-css    = "main.css" 
-
 compress.cache-dir          = "/var/cache/lighttpd/compress/"
 compress.filetype           = ( "application/javascript", "text/css", "text/html", "text/plain" )
 
