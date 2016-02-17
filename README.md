@@ -26,7 +26,7 @@ The running docker container provides a service for very special streaming purpo
 It presumably will not fit for you, but it is possible to tune it. If you need some additional information, please do not hesitate to ask.
 
 This [xxaxxelxx/xx_customerweb](https://hub.docker.com/r/xxaxxelxx/xx_customerweb/) repo is an essential part of a complex compound used for streaming.
-It provides customers web service.
+It provides web services to the customers.
 
 ### Example
 ```bash
