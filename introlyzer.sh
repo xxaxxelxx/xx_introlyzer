@@ -49,6 +49,13 @@ function remove_empty_database () {
     return 0
 }
 
+function do_sql() {
+STATEMENT="$1"
+while true; do
+    echo "$STATEMENT" | $SQLITE $DB 2>/dev/null && break
+done
+}
+
 while true; do
     for RAWINTROLOG in $DEPOTDIR/introlog.${CUSTOMER}.*; do
 	test -r "$RAWINTROLOG" || continue
@@ -111,8 +118,13 @@ while true; do
 
 #			UTF-8
 			echo -e "$CSVSTRING" | iconv -f ascii -t utf-8 -c >> $INTRODIR/$FILE_CSV
-			echo "$SQLSTRING" | iconv -f ascii -t utf-8 -c | $SQLITE "$INTRODIR/$FILE_SQLITE"
-			
+
+			SQLLOOP=0
+			while [ $SQLLOOP -lt 10 ]; do
+			    echo "$SQLSTRING" | iconv -f ascii -t utf-8 -c | $SQLITE "$INTRODIR/$FILE_SQLITE" 2>/dev/null && break
+			    SQLLOOP=$(( $SQLLOOP + 1 ))
+			done
+
 #			ASCII
 #			echo "$CSVSTRING" | iconv -f utf-8 -t ascii -c >> $INTRODIR/$FILE_CSV
 #			echo "$SQLSTRING" | iconv -f utf-8 -t ascii -c | $SQLITE "$INTRODIR/$FILE_SQLITE"
