@@ -59,7 +59,7 @@ while true; do
 	    TSTAMP=$(date -d @$(($NOW - $TOFFSET)) +%Y-%m-%d)
 	    TSTAMPLOG=$(date -d @$(($NOW - $TOFFSET)) +%d/.../%Y)
 	    FILE_SQLITE=intro.$TSTAMP.sqlite
-	    FILE_CSV=intro.$TSTAMP.csv
+	    FILE_CSV=intro.$TSTAMP.csv.txt
 
 	    find $INTRODIR -type f -mtime +${MAXAGE} -exec rm {} \;
 
@@ -106,11 +106,11 @@ while true; do
 			C_GEO_LAT="$(echo "${A_GEO[5]}" | sed 's|^\ ||')"
 			C_GEO_LON="$(echo "${A_GEO[6]}" | sed 's|^\ ||')"
 
-			CSVSTRING="${C_MOUNT},${C_CHANNEL},${C_IP},${C_T_START},${C_T_START_DATE},${C_T_START_TIME},${C_T_START_HOUR},${C_DUR},${C_GEO_COUNTRY},${C_GEO_STATE},${C_GEO_CITY},${C_GEO_ZIP},${C_GEO_LAT},${C_GEO_LON}"
+			CSVSTRING="${C_MOUNT},${C_CHANNEL},${C_IP},${C_T_START},${C_T_START_DATE},${C_T_START_TIME},${C_T_START_HOUR},${C_DUR},${C_GEO_COUNTRY},${C_GEO_STATE},${C_GEO_CITY},${C_GEO_ZIP},${C_GEO_LAT},${C_GEO_LON}\r\n"
 			SQLSTRING="INSERT INTO introstats ( mountpoint,channel,ipaddress,start_datetime,start_date,start_time,start_hour,played_sec,country,state,city,zip,latitude,longitude ) VALUES ('${C_MOUNT}','${C_CHANNEL}','${C_IP}','${C_T_START}','${C_T_START_DATE}','${C_T_START_TIME}','${C_T_START_HOUR}',${C_DUR},'${C_GEO_COUNTRY}','${C_GEO_STATE}','${C_GEO_CITY}','${C_GEO_ZIP}','${C_GEO_LAT}','${C_GEO_LON}');"
 
 #			UTF-8
-			echo "$CSVSTRING" | iconv -f ascii -t utf-8 -c >> $INTRODIR/$FILE_CSV
+			echo -e "$CSVSTRING" | iconv -f ascii -t utf-8 -c >> $INTRODIR/$FILE_CSV
 			echo "$SQLSTRING" | iconv -f ascii -t utf-8 -c | $SQLITE "$INTRODIR/$FILE_SQLITE"
 			
 #			ASCII
