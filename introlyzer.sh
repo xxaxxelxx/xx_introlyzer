@@ -106,7 +106,7 @@ while true; do
 			C_GEO_LAT="$(echo "${A_GEO[5]}" | sed 's|^\ ||')"
 			C_GEO_LON="$(echo "${A_GEO[6]}" | sed 's|^\ ||')"
 
-			CSVSTRING="${C_MOUNT},${C_CHANNEL},${C_IP},${C_T_START},${C_T_START_DATE},${C_T_START_TIME},${C_T_START_HOUR},${C_DUR},${C_GEO_COUNTRY},${C_GEO_STATE},${C_GEO_CITY},${C_GEO_ZIP},${C_GEO_LAT},${C_GEO_LON}\r\n"
+			CSVSTRING="${C_MOUNT},${C_CHANNEL},${C_IP},${C_T_START},${C_T_START_DATE},${C_T_START_TIME},${C_T_START_HOUR},${C_DUR},${C_GEO_COUNTRY},${C_GEO_STATE},${C_GEO_CITY},${C_GEO_ZIP},${C_GEO_LAT},${C_GEO_LON}\r"
 			SQLSTRING="INSERT INTO introstats ( mountpoint,channel,ipaddress,start_datetime,start_date,start_time,start_hour,played_sec,country,state,city,zip,latitude,longitude ) VALUES ('${C_MOUNT}','${C_CHANNEL}','${C_IP}','${C_T_START}','${C_T_START_DATE}','${C_T_START_TIME}','${C_T_START_HOUR}',${C_DUR},'${C_GEO_COUNTRY}','${C_GEO_STATE}','${C_GEO_CITY}','${C_GEO_ZIP}','${C_GEO_LAT}','${C_GEO_LON}');"
 
 #			UTF-8
