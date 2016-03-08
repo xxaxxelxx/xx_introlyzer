@@ -118,16 +118,21 @@ while true; do
 
 #			UTF-8
 			echo -e "$CSVSTRING" | iconv -f ascii -t utf-8 -c >> $INTRODIR/$FILE_CSV
-
 			SQLLOOP=0
 			while [ $SQLLOOP -lt 10 ]; do
 			    echo "$SQLSTRING" | iconv -f ascii -t utf-8 -c | $SQLITE "$INTRODIR/$FILE_SQLITE" 2>/dev/null && break
 			    SQLLOOP=$(( $SQLLOOP + 1 ))
+			    sleep 1
 			done
 
 #			ASCII
 #			echo "$CSVSTRING" | iconv -f utf-8 -t ascii -c >> $INTRODIR/$FILE_CSV
-#			echo "$SQLSTRING" | iconv -f utf-8 -t ascii -c | $SQLITE "$INTRODIR/$FILE_SQLITE"
+#			SQLLOOP=0
+#			while [ $SQLLOOP -lt 10 ]; do
+#			    echo "$SQLSTRING" | iconv  -f utf-8 -t ascii -c | $SQLITE "$INTRODIR/$FILE_SQLITE" 2>/dev/null && break
+#			    SQLLOOP=$(( $SQLLOOP + 1 ))
+#			    sleep 1
+#			done
 		done
 	    )
 	    TOFFSET=$(( $TOFFSET + 86400 ))
