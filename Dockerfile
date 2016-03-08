@@ -16,7 +16,7 @@ RUN apt-get -qq -y install less
 RUN apt-get -qq -y install bc 
 RUN apt-get -qq -y install geoip-bin
 RUN apt-get -qq -y install wget
-RUN apt-get -qq -y install zip 
+RUN apt-get -qq -y install sqlite 
 RUN apt-get clean
 
 VOLUME /customer
