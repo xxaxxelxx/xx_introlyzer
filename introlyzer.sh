@@ -65,9 +65,9 @@ while true; do
 	    NOW=$(date +%s)
 	    TSTAMP=$(date -d @$(($NOW - $TOFFSET)) +%Y-%m-%d)
 	    TSTAMPLOG=$(date -d @$(($NOW - $TOFFSET)) +%d/.../%Y)
-	    FILE_SQLCMD=intro.$TSTAMP.sql
-	    FILE_SQLITE=intro.$TSTAMP.sqlite
-	    FILE_CSV=intro.$TSTAMP.csv.txt
+	    FILE_SQLCMD=intro.$CUSTOMER.$TSTAMP.sql
+	    FILE_SQLITE=intro.$CUSTOMER.$TSTAMP.sqlite
+	    FILE_CSV=intro.$CUSTOMER.$TSTAMP.csv.txt
 
 	    find $INTRODIR -type f -mtime +${MAXAGE} -exec rm {} \;
 
