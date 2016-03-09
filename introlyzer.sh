@@ -153,6 +153,7 @@ while true; do
 	    fi
 	    test -r $INTRODIR/$FILE_SQLITE && remove_empty_database "$INTRODIR/$FILE_SQLITE"
 	done
+#	rm -f "$RAWINTROLOG"
     done
 exit
     sleep $SLEEP
