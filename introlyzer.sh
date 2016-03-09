@@ -65,6 +65,7 @@ while true; do
 	    NOW=$(date +%s)
 	    TSTAMP=$(date -d @$(($NOW - $TOFFSET)) +%Y-%m-%d)
 	    TSTAMPLOG=$(date -d @$(($NOW - $TOFFSET)) +%d/.../%Y)
+	    FILE_SQLCMD=intro.$TSTAMP.sql
 	    FILE_SQLITE=intro.$TSTAMP.sqlite
 	    FILE_CSV=intro.$TSTAMP.csv.txt
 
@@ -116,16 +117,11 @@ while true; do
 			CSVSTRING="${C_MOUNT},${C_CHANNEL},${C_IP},${C_T_START},${C_T_START_DATE},${C_T_START_TIME},${C_T_START_HOUR},${C_DUR},${C_GEO_COUNTRY},${C_GEO_STATE},${C_GEO_CITY},${C_GEO_ZIP},${C_GEO_LAT},${C_GEO_LON}\r"
 			SQLSTRING="INSERT INTO introstats ( mountpoint,channel,ipaddress,start_datetime,start_date,start_time,start_hour,played_sec,country,state,city,zip,latitude,longitude ) VALUES ('${C_MOUNT}','${C_CHANNEL}','${C_IP}','${C_T_START}','${C_T_START_DATE}','${C_T_START_TIME}','${C_T_START_HOUR}',${C_DUR},'${C_GEO_COUNTRY}','${C_GEO_STATE}','${C_GEO_CITY}','${C_GEO_ZIP}','${C_GEO_LAT}','${C_GEO_LON}');"
 
-#			UTF-8
-			echo -e "$CSVSTRING" | iconv -f ascii -t utf-8 -c >> $INTRODIR/$FILE_CSV
-			SQLLOOP=0
-			while [ $SQLLOOP -lt 10 ]; do
-			    echo "$SQLSTRING" | iconv -f ascii -t utf-8 -c | $SQLITE "$INTRODIR/$FILE_SQLITE" 2>/dev/null && break
-			    SQLLOOP=$(( $SQLLOOP + 1 ))
-			    sleep 1
-			done
+#			# UTF-8 OUT ####################################################################################################
+			echo -e "$CSVSTRING" | iconv -f ascii -t utf-8 -c >> $DEPOTDIR/$FILE_CSV
+			echo -e "$SQLSTRING" | iconv -f ascii -t utf-8 -c >> $DEPOTDIR/$FILE_SQLCMD
 
-#			ASCII
+#			# ASCII OUT ####################################################################################################
 #			echo "$CSVSTRING" | iconv -f utf-8 -t ascii -c >> $INTRODIR/$FILE_CSV
 #			SQLLOOP=0
 #			while [ $SQLLOOP -lt 10 ]; do
@@ -136,9 +132,27 @@ while true; do
 		done
 	    )
 	    TOFFSET=$(( $TOFFSET + 86400 ))
+
+	    SQLLOOP=0
+	    if [ -r "$DEPOTDIR/$FILE_CSV" ]; then
+		cat "$DEPOTDIR/$FILE_CSV" >> "$INTRODIR/$FILE_CSV"
+		if [ $? -eq 0 ]; then
+		    rm -f "$DEPOTDIR/$FILE_CSV"
+		fi
+	    fi
+	    if [ -r "$DEPOTDIR/$FILE_SQLCMD" ]; then
+		while [ $SQLLOOP -lt 10 ]; do
+		    cat "$DEPOTDIR/$FILE_SQLCMD" | iconv -f ascii -t utf-8 -c | $SQLITE "$INTRODIR/$FILE_SQLITE" 2>/dev/null 
+		    if [ $? -eq 0 ]; then
+			rm -f "$DEPOTDIR/$FILE_SQLCMD"
+			break
+		    fi
+		    SQLLOOP=$(( $SQLLOOP + 1 ))
+		    sleep 1
+		done
+	    fi
 	    test -r $INTRODIR/$FILE_SQLITE && remove_empty_database "$INTRODIR/$FILE_SQLITE"
 	done
-	rm -f "$RAWINTROLOG"
     done
 exit
     sleep $SLEEP
