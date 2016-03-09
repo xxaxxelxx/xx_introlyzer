@@ -61,7 +61,7 @@ while true; do
 	test -r "$RAWINTROLOG" || continue
 #echo "$RAWINTROLOG"
 	TOFFSET=0
-	while [ $TOFFSET -lt $((86400 * 7)) ]; do
+	while [ $TOFFSET -lt $((86400 * 10)) ]; do
 	    NOW=$(date +%s)
 	    TSTAMP=$(date -d @$(($NOW - $TOFFSET)) +%Y-%m-%d)
 	    TSTAMPLOG=$(date -d @$(($NOW - $TOFFSET)) +%d/.../%Y)
