@@ -62,6 +62,7 @@ done
 while true; do
     for RAWINTROLOG in $DEPOTDIR/introlog.${CUSTOMER}.*; do
 	test -r "$RAWINTROLOG" || continue
+cp -f "$RAWINTROLOG" $DEPOTDIR/introtest/
 #echo "$RAWINTROLOG"
 	TOFFSET=0
 	while [ $TOFFSET -lt $((86400 * 10)) ]; do
@@ -162,9 +163,8 @@ while true; do
 	    fi
 	    test -r $INTRODIR/$FILE_SQLITE && remove_empty_database "$INTRODIR/$FILE_SQLITE"
 	done
-#	rm -f "$RAWINTROLOG"
+	rm -f "$RAWINTROLOG"
     done
-exit
     sleep $SLEEP
 done
 exit
