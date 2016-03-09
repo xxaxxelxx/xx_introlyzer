@@ -23,8 +23,11 @@ function create_database () {
 	ipaddress TEXT NOT NULL DEFAULT 'unknown', \
 	start_datetime TEXT NOT NULL DEFAULT 'unknown', \
 	start_date TEXT NOT NULL DEFAULT 'unknown', \
+	start_day_txt TEXT NOT NULL DEFAULT 'unknown', \
+	start_day_int INTEGER NOT NULL DEFAULT 666, \
 	start_time TEXT NOT NULL DEFAULT 'unknown', \
-	start_hour TEXT NOT NULL DEFAULT 'unknown', \
+	start_hour_txt TEXT NOT NULL DEFAULT 'unknown', \
+	start_hour_int INTEGER NOT NULL DEFAULT 666, \
 	played_sec INTEGER NOT NULL DEFAULT 0, \
 	country TEXT NOT NULL DEFAULT 'unknown', \
 	state TEXT NOT NULL DEFAULT 'unknown', \
@@ -92,7 +95,9 @@ while true; do
 	    		C_T_YEAR=${A_TIME[2]}
 	    		C_T_MONTH=${A_TIME[1]}
 	    		C_T_DAY=${A_TIME[0]}
+#	    		C_T_DAY_INT=${A_TIME[0]#0*}
 	    		C_T_HOUR=${A_TIME[3]}
+#	    		C_T_HOUR_INT=${A_TIME[3]#0*}
 	    		C_T_MIN=${A_TIME[4]}
 	    		C_T_SEC=${A_TIME[5]}
 	    		C_T_EPOCH=$(date -d "${C_T_MONTH} ${C_T_DAY} ${C_T_HOUR}:${C_T_MIN}:${C_T_SEC} ${C_T_YEAR} UTC" +%s)
@@ -103,6 +108,9 @@ while true; do
 	    		C_T_START_DATE="$(date -d @${C_T_E_START} '+%Y-%m-%d')"
 	    		C_T_START_TIME="$(date -d @${C_T_E_START} '+%H:%M:%S')"
 			C_T_START_HOUR="$(date -d @${C_T_E_START} +%H)"
+			C_T_START_HOUR_INT="${C_T_START_HOUR#0*}"
+			C_T_START_DAY="$(date -d @${C_T_E_START} +%d)"
+			C_T_START_DAY_INT="${C_T_START_DAY#0*}"
 #geoiplookup $C_IP | grep 'City' | sed 's|^.*\:||' | grep -i 'sevastop' || continue
 #	    		OIFS=$IFS;IFS=$'\,';A_GEO=($(geoiplookup $C_IP | grep 'City' | sed 's|^.*\:||' 2>/dev/null));IFS=$OIFS
 			QUOTE="\'"
@@ -116,7 +124,7 @@ while true; do
 			C_GEO_LON="$(echo "${A_GEO[6]}" | sed 's|^\ ||')"
 
 			CSVSTRING="${C_MOUNT},${C_CHANNEL},${C_IP},${C_T_START},${C_T_START_DATE},${C_T_START_TIME},${C_T_START_HOUR},${C_DUR},${C_GEO_COUNTRY},${C_GEO_STATE},${C_GEO_CITY},${C_GEO_ZIP},${C_GEO_LAT},${C_GEO_LON}\r"
-			SQLSTRING="INSERT INTO introstats ( mountpoint,channel,ipaddress,start_datetime,start_date,start_time,start_hour,played_sec,country,state,city,zip,latitude,longitude ) VALUES ('${C_MOUNT}','${C_CHANNEL}','${C_IP}','${C_T_START}','${C_T_START_DATE}','${C_T_START_TIME}','${C_T_START_HOUR}',${C_DUR},'${C_GEO_COUNTRY}','${C_GEO_STATE}','${C_GEO_CITY}','${C_GEO_ZIP}','${C_GEO_LAT}','${C_GEO_LON}');"
+			SQLSTRING="INSERT INTO introstats ( mountpoint,channel,ipaddress,start_datetime,start_date,start_day_txt,start_day_int,start_time,start_hour_txt,start_hour_int,played_sec,country,state,city,zip,latitude,longitude ) VALUES ('${C_MOUNT}','${C_CHANNEL}','${C_IP}','${C_T_START}','${C_T_START_DATE}','${C_T_START_DAY}','${C_T_START_DAY_INT}','${C_T_START_TIME}','${C_T_START_HOUR}','${C_T_START_HOUR_INT}',${C_DUR},'${C_GEO_COUNTRY}','${C_GEO_STATE}','${C_GEO_CITY}','${C_GEO_ZIP}','${C_GEO_LAT}','${C_GEO_LON}');"
 
 #			# UTF-8 OUT ####################################################################################################
 			echo -e "$CSVSTRING" | iconv -f ascii -t utf-8 -c >> $DEPOTDIR/$FILE_CSV
