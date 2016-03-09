@@ -63,11 +63,12 @@ while true; do
 	TOFFSET=0
 	while [ $TOFFSET -lt $((86400 * 10)) ]; do
 	    NOW=$(date +%s)
-	    TSTAMP=$(date -d @$(($NOW - $TOFFSET)) +%Y-%m-%d)
+	    TSTAMP_YMD=$(date -d @$(($NOW - $TOFFSET)) +%Y-%m-%d)
+	    TSTAMP_YM=$(date -d @$(($NOW - $TOFFSET)) +%Y-%m)
 	    TSTAMPLOG=$(date -d @$(($NOW - $TOFFSET)) +%d/.../%Y)
-	    FILE_SQLCMD=intro.$CUSTOMER.$TSTAMP.sql
-	    FILE_SQLITE=intro.$CUSTOMER.$TSTAMP.sqlite
-	    FILE_CSV=intro.$CUSTOMER.$TSTAMP.csv.txt
+	    FILE_SQLCMD=intro.$CUSTOMER.$TSTAMP_YMD.sql
+	    FILE_SQLITE=intro.$CUSTOMER.$TSTAMP_YM.sqlite
+	    FILE_CSV=intro.$CUSTOMER.$TSTAMP_YMD.csv.txt
 
 	    find $INTRODIR -type f -mtime +${MAXAGE} -exec rm {} \;
 
